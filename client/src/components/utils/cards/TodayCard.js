@@ -1,8 +1,7 @@
 import React from "react";
 import StyledCardToday from "./../../styles/StyledCardToday";
 import Paragraph from "./../../styles/Paragraph";
-import { WiDayCloudy } from "react-icons/wi";
-
+import {weather_icons} from './../../utils/icons';
 
 export default function TodayCard(props) {
   return (
@@ -10,7 +9,7 @@ export default function TodayCard(props) {
       <Paragraph className="location">{props.today.city}, {props.today.region}</Paragraph>
       <div className="row">
         <Paragraph>{props.today.temp}&deg;</Paragraph>
-        <WiDayCloudy size={75} />
+        {weather_icons.filter(i=>i.code === props.today.code)[0].today}
       </div>
       <Paragraph className="stats">{props.today.condition}</Paragraph>
       <hr/>

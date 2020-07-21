@@ -30,9 +30,12 @@ app.use(cors());
 
 
 //routes
+
+//get data by name 
 app.get("/:query", (req, res) => {
+    console.log(req.params.query)
   request.get(
-    `https://weather-ydn-yql.media.yahoo.com/forecastrss?location=${req.params.query},ca&u=c&format=json`,
+    `https://weather-ydn-yql.media.yahoo.com/forecastrss?location=${req.params.query}&u=c&format=json`,
     null,
     null,
     function (err, data, result) {
@@ -51,5 +54,33 @@ app.get("/:query", (req, res) => {
     }
   );
 });
+
+
+//get data by latitude and longitude
+app.get("/coordinates/:lat/:long", (req, res) => {
+    console.log(req.params.lat)
+    console.log("dasd")
+    request.get(
+      `https://weather-ydn-yql.media.yahoo.com/forecastrss?lat=${req.params.lat}&lon=${req.params.long}&u=c&format=json`,
+      null,
+      null,
+      function (err, data, result) {
+        if (err) {
+          res.status(400).json({
+              status:"failed"
+          })
+        } else {
+      
+          res.status(200).json({
+            status: "success",
+            data
+            
+          });
+        }
+      }
+    );
+  });
+  
+
 
 app.listen(port);
