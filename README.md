@@ -1,2 +1,2 @@
 # WeatherApp
-A weather application that provides 5 days forecast using Yahoo Weather API 
+A weather application that provides 5 days forecast using Yahoo Weather API and Mapbox API
