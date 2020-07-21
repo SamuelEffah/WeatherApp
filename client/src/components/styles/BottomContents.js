@@ -7,7 +7,6 @@ export default styled.div`
     display:flex;
     justify-content:center;
     overflow-x:auto;
-    background:#f2f2f2;
 
     ::-webkit-scrollbar{
         width:0px;

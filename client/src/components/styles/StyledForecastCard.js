@@ -18,4 +18,10 @@ export default styled.div`
         box-shadow: 2px 4px 3px #adaaaa;
     }
 
+    .day{
+      font-size:18px;
+    }
+    .temp{
+      font-size:30px;
+    }
 `;

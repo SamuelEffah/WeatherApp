@@ -23,9 +23,16 @@ const request = new OAuth.OAuth(
 );
 
 const app = express();
+
+//middeleware 
+app.use(express.json());
+app.use(cors());
+
+
+//routes
 app.get("/:query", (req, res) => {
   request.get(
-    `https://weather-ydn-yql.media.yahoo.com/forecastrss?location=${req.params.query},ca&format=json`,
+    `https://weather-ydn-yql.media.yahoo.com/forecastrss?location=${req.params.query},ca&u=c&format=json`,
     null,
     null,
     function (err, data, result) {
@@ -34,7 +41,7 @@ app.get("/:query", (req, res) => {
             status:"failed"
         })
       } else {
-        console.log(data.location)
+    
         res.status(200).json({
           status: "success",
           data
