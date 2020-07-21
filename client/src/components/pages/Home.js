@@ -13,12 +13,19 @@ import { MdLocationOn } from "react-icons/md";
 import { IoIosClose } from "react-icons/io";
 import StyledDropdown from "./../styles/StyledDropdown";
 import StyledItem from "./../styles/StyledItem";
+import StyledUpdateBtn from './../styles/StyledUpdateBtn';
+import {MdUpdate} from 'react-icons/md'
 
 import axios from "axios";
 import moment from "moment";
 
 export default function Home(props) {
   const [query, setQuery] = useState("");
+  const [selected,setSelected] = useState({
+    lat:43.255203,
+    long:	-79.843826
+  });
+  const [isRotate,setIsRotate]=useState(false);
   const [queryResult, setQueryResult] = useState([]);
   const [forecasts, setForecasts] = useState([]);
   const [isClose, setIsClose] = useState(false);
@@ -35,7 +42,7 @@ export default function Home(props) {
     temp: 0,
     wind_speed: 0,
     updated_time: 0,
-    code:44,
+    code:44, //icon code => not available (null)
   });
 
   //get geolocation from mapbox api
@@ -83,6 +90,7 @@ export default function Home(props) {
     setForecasts(
       resultJSON.forecasts.slice(1, resultJSON.forecasts.length - 2)
     );
+    setIsRotate(false);
   };
 
   //geolocation with mapbox
@@ -100,6 +108,11 @@ export default function Home(props) {
   const selectedQuery = (e, selected) => {
     e.preventDefault();
     setQuery(selected.place_name);
+    setSelected({
+      lat:selected.center[1],
+      long:selected.center[0],
+    });
+
     setIsClose(false);
     axios
       .get(
@@ -110,12 +123,31 @@ export default function Home(props) {
       });
   };
 
+  //update 
+  const updateWeather=(e)=>{
+    e.preventDefault();
+    setIsRotate(true);
+    axios
+      .get(
+        `http://localhost:5000/coordinates/${selected.lat}/${selected.long}`
+      )
+      .then((res) => {
+        _setToday(res);
+      });
+  }
+
   return (
     <Container>
       <Column>
         <Contents style={{ flex: 2, background: "#f2f2f2" }}>
-          <Row style={{ width: "90%" }}>
+          <Row style={{ width: "90%" ,position:"relative"}}>
+            
             <TodayCard today={todayWeather} />
+            <div>
+            <StyledUpdateBtn rotate={isRotate} onClick={e=>updateWeather(e)}>
+              <MdUpdate  size={20}/>
+            </StyledUpdateBtn>
+            </div>
             <Column
               style={{
                 width: "80%",

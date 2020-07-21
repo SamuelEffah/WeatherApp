@@ -33,7 +33,6 @@ app.use(cors());
 
 //get data by name 
 app.get("/:query", (req, res) => {
-    console.log(req.params.query)
   request.get(
     `https://weather-ydn-yql.media.yahoo.com/forecastrss?location=${req.params.query}&u=c&format=json`,
     null,
@@ -58,8 +57,6 @@ app.get("/:query", (req, res) => {
 
 //get data by latitude and longitude
 app.get("/coordinates/:lat/:long", (req, res) => {
-    console.log(req.params.lat)
-    console.log("dasd")
     request.get(
       `https://weather-ydn-yql.media.yahoo.com/forecastrss?lat=${req.params.lat}&lon=${req.params.long}&u=c&format=json`,
       null,
